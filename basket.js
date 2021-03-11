@@ -1,12 +1,15 @@
-let requestURL = localStorage["requestURL"];
+let requestURL = "http://localhost:3000/api/cameras";
 
-function showBasket(jsonObj) {
-    let camera = jsonObj;
-    const section = document.querySelector("section");
 
-    for (let i = 0; i < camera.length; i++) {
-        const id = camera[i]["_id"];
-        let objLinea = localStorage.getItem(id);
+function showBasket() {
+    localStorage.removeItem("requestURL");
+    localStorage.removeItem("productSelect");
+    const basketSection = document.getElementById("basket");
+    let totalPrice = 0; 
+
+    for (let i = 0; i < localStorage.length; i++) {
+        let objKey = localStorage.key(i);
+        let objLinea = localStorage.getItem(objKey);
         let objJson = JSON.parse(objLinea);
 
         const myFigure = document.createElement('figure');
@@ -14,17 +17,32 @@ function showBasket(jsonObj) {
         const myFigcaption = document.createElement('figcaption');
         const myH3 = document.createElement('h3');
         const myPara = document.createElement('p');
+        const formDelete = document.createElement('form');
+        const buttonDelete = document.createElement('button');
+        const iconDelete = document.createElement('i');
 
+        totalPrice += objJson.price;
         myImg.src = objJson.imageUrl;
         myH3.textContent = objJson.name;
         myPara.textContent = objJson.price / 100 + " €";
+        iconDelete.className = "fas fa-trash-alt";
 
-        section.appendChild(myFigure);
+        buttonDelete.addEventListener("click", function(){
+            localStorage.removeItem(objKey);
+        });
+
+        basketSection.appendChild(myFigure);
         myFigure.appendChild(myImg);
         myFigure.appendChild(myFigcaption);
         myFigcaption.appendChild(myH3);
         myFigcaption.appendChild(myPara);
+        myFigcaption.appendChild(formDelete);
+        formDelete.appendChild(buttonDelete);
+        buttonDelete.appendChild(iconDelete);
     }
+    const total = document.createElement('p');
+    total.textContent = "Total : " + totalPrice / 100 + " €";
+    basketSection.appendChild(total);
 }
 
 

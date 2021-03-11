@@ -1,3 +1,4 @@
+console.log(localStorage)
 localStorage["requestURL"] = "http://localhost:3000/api/cameras";
 let requestURL = localStorage["requestURL"];
 let productRequestURL;

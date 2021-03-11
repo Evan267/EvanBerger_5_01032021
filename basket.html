@@ -16,8 +16,33 @@
 			</h1>
 			<a href="basket.html"><i class="fas fa-shopping-basket"></i></a>
 		</header>
-		<section>
-		</section>
+		<section id="basket">
+        </section>
+        <section>
+            <form action="​http://localhost:3000/api/cameras/order" method="POST">
+                <div>
+                    <label for="firstName">Prénom</label>
+                    <input type="text" name="firstName" id="firstName" required aria-required="true">
+                </div>
+                <div>
+                    <label for="lastName">Nom</label>
+                    <input type="text" name="lastName" id="lastName" required aria-required="true">
+                </div>
+                <div>
+                    <label for="adress">Adresse</label>
+                    <input type="text" name="adress" id="adress" required aria-required="true">
+                </div>
+                <div>
+                    <label for="city">Ville</label>
+                    <input type="text" name="city" id="city" required aria-required="true">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input type="email" name="email" id="email" required aria-required="true">
+                </div>
+                <input type="submit" value="Commander">
+            </form>
+        </section>
 		<footer></footer>
 	</body>
 </html>
