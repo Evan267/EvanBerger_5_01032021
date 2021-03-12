@@ -1,11 +1,25 @@
 let requestURL = "http://localhost:3000/api/cameras";
+let postURL = requestURL + "/order" ; 
+const productSelect = localStorage["productSelect"];
+let products = [];
 
 
-function showBasket() {
+class Contact{
+    constructor(firstName, lastName, address, city, email){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.email = email;
+    }
+}
+
+
+async function showBasket() {
     localStorage.removeItem("requestURL");
     localStorage.removeItem("productSelect");
+    let totalPrice = 0;
     const basketSection = document.getElementById("basket");
-    let totalPrice = 0; 
 
     for (let i = 0; i < localStorage.length; i++) {
         let objKey = localStorage.key(i);
@@ -21,6 +35,7 @@ function showBasket() {
         const buttonDelete = document.createElement('button');
         const iconDelete = document.createElement('i');
 
+        products.push(objJson._id);
         totalPrice += objJson.price;
         myImg.src = objJson.imageUrl;
         myH3.textContent = objJson.name;
@@ -43,19 +58,59 @@ function showBasket() {
     const total = document.createElement('p');
     total.textContent = "Total : " + totalPrice / 100 + " €";
     basketSection.appendChild(total);
+    localStorage["requestURL"] = requestURL;
+    localStorage["productSelect"] = productSelect;
 }
 
+async function order(){
+    const orderForm = document.querySelector('form');
+    orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const targ = e.target;
+        const contact = new Contact(targ.lastName.value, targ.firstName.value, targ.address.value, targ.city.value, targ.email.value);
+        const postJSON = JSON.stringify({contact, products});
+        console.log(postJSON);
+        fetch(postURL, {
+            method: "POST",
+            body : postJSON,
+        })
+        .catch(error => alert("Erreur POST : " + error))
+    })
+}
+
+/*async function asyncFunction(){
+    try{
+        console.log(products);
+        console.log(localStorage);
+        await showBasket();
+        await order();
+    }catch(error){
+        alert("Erreur : " + error)
+    }
+}
+
+
+asyncFunction();
+*/
 
 
 
 fetch(requestURL)
     .then(function(response){
         console.log(localStorage);
+        console.log(products)
         return response.json();
     })
     .then(function(response){
+        order();
         return showBasket(response);
     })
     .catch(function(error){
         return alert("Erreur : " + error)
     });
+
+
+
+
+
+
