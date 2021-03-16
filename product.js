@@ -1,5 +1,13 @@
 let requestURL = localStorage["requestURL"] + "/" + localStorage["productSelect"];
 
+class basketAdd{
+    constructor(obj, lense, quantity){
+        this.obj = obj,
+        this.lense = lense,
+        this.quantity = quantity
+    }
+}
+
 function showCamera(jsonObj) {
     let camera = jsonObj;
     const id = camera._id;
@@ -24,7 +32,9 @@ function showCamera(jsonObj) {
     };
 
     addToBasket.addEventListener("click", function(){
-        let objLinea = JSON.stringify(camera);
+        let quantity = document.getElementById("quantity").value;
+        let lense = document.getElementById("lense").value;
+        let objLinea = JSON.stringify({camera, quantity, lense});
         localStorage.setItem(id, objLinea); 
         console.log(localStorage.getItem(id));
     });
