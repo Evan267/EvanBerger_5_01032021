@@ -56,7 +56,17 @@ async function showBasket() {
             selectItem.value = lenses[j];
             selectLense.appendChild(selectItem);
         };
-        selectLense.value = objJson.lense;
+
+
+
+
+        /*selectLense.addEventListener("change", function(){
+            choice = selectLense.selectedIndex;
+            objJson.lense = selectLense.options[choice].value;
+            location.href = "basket.html";
+            let objLinea2 = JSON.stringify(objJson);
+            localStorage.setItem(objKey, objLinea2);
+        })*/
 
         quantity.addEventListener("change", function(){
             objJson.quantity = quantity.value;
@@ -95,7 +105,7 @@ async function order(){
         let myHeader = new Headers({'Content-Type': 'application/json'});
         e.preventDefault();
         const targ = e.target;
-        const contact = new Contact(targ.lastName.value, targ.firstName.value, targ.address.value, targ.city.value, targ.email.value);
+        const contact = new Contact(targ.firstName.value, targ.lastName.value, targ.address.value, targ.city.value, targ.email.value);
         const postJSON = JSON.stringify({contact, products});
         console.log(postJSON);
         request.onreadystatechange = function() {

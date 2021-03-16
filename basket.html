@@ -21,19 +21,19 @@
             <form name="orderForm">
                 <div>
                     <label for="firstName">Prénom</label>
-                    <input type="text" name="firstName" id="firstName" required aria-required="true">
+                    <input type="text" name="firstName" id="firstName" required aria-required="true" pattern="[A-Z][a-z]{1,}">
                 </div>
                 <div>
                     <label for="lastName">Nom</label>
-                    <input type="text" name="lastName" id="lastName" required aria-required="true">
+                    <input type="text" name="lastName" id="lastName" required aria-required="true" pattern="[A-Z,a-z]{1,}">
                 </div>
                 <div>
                     <label for="address">Adresse</label>
-                    <input type="text" name="address" id="address" required aria-required="true">
+                    <input type="text" name="address" id="address" required aria-required="true" pattern="[0-9]{1,}[a-z, ,,,A-Z,0-9]{1,}">
                 </div>
                 <div>
                     <label for="city">Ville</label>
-                    <input type="text" name="city" id="city" required aria-required="true">
+                    <input type="text" name="city" id="city" required aria-required="true" pattern="[A-Z,a-z,-]{2,}">
                 </div>
                 <div>
                     <label for="email">Email</label>
