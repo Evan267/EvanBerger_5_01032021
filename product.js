@@ -1,4 +1,5 @@
 let requestURL = localStorage["requestURL"] + "/" + localStorage["productSelect"];
+localStorage.removeItem("orderContact");
 
 class basketAdd{
     constructor(obj, lense, quantity){
@@ -36,7 +37,6 @@ function showCamera(jsonObj) {
         let lense = document.getElementById("lense").value;
         let objLinea = JSON.stringify({camera, quantity, lense});
         localStorage.setItem(id, objLinea); 
-        console.log(localStorage.getItem(id));
     });
 
 }
@@ -54,46 +54,3 @@ fetch(requestURL)
     .catch(function(error){
         return alert("Erreur : " + error)
     });
-
-
-
-
-/*
-
-
-request.open("GET", requestURL);
-request.send()
-
-const firstCamera = new Camera(1);
-
-id.textContent = firstCamera;
-
-
-    fetch('http://localhost:3000/api/cameras')
-        .then(function(response){
-            return response.json();
-        })
-        .then(function(json){
-            return console.log(json)
-        })
-        .catch(function(error){
-            return alert("Erreur : " + error)
-        });
-
-
-request.onreadystatechange = function(){
-    if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-        let cam = JSON.parse(this.responseText);
-        showCamera(cam);
-    }
-}
-
-      let lenses = camera[i].lenses;
-      for (var j = 0; j < lenses.length; j++) {
-        var listItem = document.createElement('li');
-        listItem.textContent = lenses[j];
-        myList.appendChild(listItem);
-      }
-    
-
-*/

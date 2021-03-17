@@ -2,8 +2,7 @@ let requestURL = "http://localhost:3000/api/cameras";
 let postURL = requestURL + "/order" ; 
 const productSelect = localStorage["productSelect"];
 let products = [];
-let request = new XMLHttpRequest;
-
+localStorage.removeItem("orderContact");
 
 class Contact{
     constructor(firstName, lastName, address, city, email){
@@ -107,26 +106,17 @@ async function order(){
         const targ = e.target;
         const contact = new Contact(targ.firstName.value, targ.lastName.value, targ.address.value, targ.city.value, targ.email.value);
         const postJSON = JSON.stringify({contact, products});
-        console.log(postJSON);
-        request.onreadystatechange = function() {
-            if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
-                var response = JSON.parse(this.responseText);
-                console.log(response);
-            }
-        };
-        request.open("POST",  postURL);
-        request.setRequestHeader("Content-type", "application/json");
-        request.send(postJSON);
-        /*fetch(postURL, {
+        fetch(postURL, {
             method: "POST",
             headers : myHeader,
             body : postJSON,
         })
-        .then(function(response){
-            return console.log(response)
-            //location.href = "lastPage.html"
+        .then(response => response.json())
+        .then(function(json){
+            localStorage.setItem("order", JSON.stringify(json))
         })
-        .catch(error => alert("Erreur POST : " + error))*/
+        .then(function(){location.href = "lastPage.html"})
+        .catch(error => alert("Erreur POST : " + error))
     })
 }
 
@@ -134,8 +124,6 @@ async function order(){
 
 fetch(requestURL)
     .then(function(response){
-        console.log(localStorage);
-        console.log(products)
         return response.json();
     })
     .then(function(response){
