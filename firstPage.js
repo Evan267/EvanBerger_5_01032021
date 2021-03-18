@@ -2,7 +2,7 @@ console.log(localStorage)
 localStorage["requestURL"] = "http://localhost:3000/api/cameras";
 let requestURL = localStorage["requestURL"];
 let productRequestURL;
-localStorage.removeItem("orderContact");
+localStorage.removeItem("order");
 
 
 function showCamera(jsonObj) {
@@ -19,22 +19,29 @@ function showCamera(jsonObj) {
             const myPara = document.createElement('p');
 
 
-
-            myImg.src = camera[i]["imageUrl"];
-            myH3.textContent = camera[i]["name"];
-            myPara.textContent = camera[i]["price"] / 100 + " €";
             myLink.href = "product.html";
+            myLink.className = "stretched-link"
+            myFigure.className = "card col-12 col-md-6 col-xl-4 border-0";
+            myFigcaption.className = "card-body px-0 pt-2";
+            myImg.src = camera[i]["imageUrl"];
+            myImg.className = "card-img-top";
+            myH3.textContent = camera[i]["name"];
+            myH3.className = "card-title"
+            myPara.textContent = camera[i]["price"] / 100 + " €";
+            myPara.className = "card-text"
+            
 
             myLink.addEventListener('click', function(event){
                 localStorage["productSelect"] = id;
             });
 
-            section.appendChild(myLink);
-            myLink.appendChild(myFigure);
+            section.appendChild(myFigure);
             myFigure.appendChild(myImg);
-            myFigure.appendChild(myFigcaption);
-            myFigcaption.appendChild(myH3);
+            myFigure.appendChild(myLink);
+            myLink.appendChild(myFigcaption);
+            myFigcaption.appendChild(myH3);        
             myFigcaption.appendChild(myPara);
+            
     }
 }
 

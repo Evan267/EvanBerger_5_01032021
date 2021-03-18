@@ -1,5 +1,5 @@
 let requestURL = localStorage["requestURL"] + "/" + localStorage["productSelect"];
-localStorage.removeItem("orderContact");
+console.log(localStorage)
 
 class basketAdd{
     constructor(obj, lense, quantity){
@@ -13,7 +13,7 @@ function showCamera(jsonObj) {
     let camera = jsonObj;
     const id = camera._id;
     const productImg = document.querySelector('img');
-    const productName = document.querySelector('h2');
+    const productName = document.querySelector('h1');
     const productDescription = document.getElementById('p1');
     const productPrice = document.getElementById('p2');
     const selectLense = document.querySelector('select');

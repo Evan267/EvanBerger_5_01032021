@@ -2,7 +2,7 @@ let requestURL = "http://localhost:3000/api/cameras";
 let postURL = requestURL + "/order" ; 
 const productSelect = localStorage["productSelect"];
 let products = [];
-localStorage.removeItem("orderContact");
+let totalPrice = 0;
 
 class Contact{
     constructor(firstName, lastName, address, city, email){
@@ -18,82 +18,90 @@ class Contact{
 async function showBasket() {
     localStorage.removeItem("requestURL");
     localStorage.removeItem("productSelect");
-    let totalPrice = 0;
+
     const basketSection = document.getElementById("basket");
 
-    for (let i = 0; i < localStorage.length; i++) {
-        let objKey = localStorage.key(i);
-        let objLinea = localStorage.getItem(objKey);
-        let objJson = JSON.parse(objLinea);
+    if(localStorage.length == 0){
+        const basketNullPara = document.createElement('p');
+        basketNullPara.textContent = "Votre panier est vide";
+        basketSection.appendChild(basketNullPara);
 
-        const myFigure = document.createElement('figure');
-        const myImg = document.createElement('img');
-        const myFigcaption = document.createElement('figcaption');
-        const productName = document.createElement('h3');
-        const selectLense = document.createElement('select');
-        const quantity = document.createElement('input');
-        const price = document.createElement('p');
-        const formDelete = document.createElement('form');
-        const buttonDelete = document.createElement('button');
-        const iconDelete = document.createElement('i');
+    }else{
+        console.log(localStorage);
+        for (let i = 0; i < localStorage.length; i++) {
+            let objKey = localStorage.key(i);
+            let objLinea = localStorage.getItem(objKey);
+            let objJson = JSON.parse(objLinea);
 
-        products.push(objJson.camera._id);
-        totalPrice += objJson.camera.price;
-        quantity.type = "number";
-        quantity.name = "quantity";
-        quantity.id= "quantity";
-        quantity.value = objJson.quantity;
-        myImg.src = objJson.camera.imageUrl;
-        productName.textContent = objJson.camera.name;
-        price.textContent = objJson.camera.price * quantity.value / 100 + " €";
-        iconDelete.className = "fas fa-trash-alt";
+            const myFigure = document.createElement('figure');
+            const myImg = document.createElement('img');
+            const myFigcaption = document.createElement('figcaption');
+            const productName = document.createElement('h3');
+            const selectLense = document.createElement('select');
+            const quantity = document.createElement('input');
+            const price = document.createElement('p');
+            const formDelete = document.createElement('form');
+            const buttonDelete = document.createElement('button');
+            const iconDelete = document.createElement('i');
 
-        let lenses = objJson.camera.lenses;
-        for (var j = 0; j < lenses.length; j++) {
-            var selectItem = document.createElement('option');
-            selectItem.textContent = lenses[j];
-            selectItem.value = lenses[j];
-            selectLense.appendChild(selectItem);
-        };
+            products.push(objJson.camera._id);
+            totalPrice += objJson.camera.price * objJson.quantity;
+            quantity.type = "number";
+            quantity.name = "quantity";
+            quantity.id= "quantity";
+            quantity.value = objJson.quantity;
+            myImg.src = objJson.camera.imageUrl;
+            productName.textContent = objJson.camera.name;
+            price.textContent = objJson.camera.price * quantity.value / 100 + " €";
+            iconDelete.className = "fas fa-trash-alt";
 
-
-
-
-        /*selectLense.addEventListener("change", function(){
-            choice = selectLense.selectedIndex;
-            objJson.lense = selectLense.options[choice].value;
-            location.href = "basket.html";
-            let objLinea2 = JSON.stringify(objJson);
-            localStorage.setItem(objKey, objLinea2);
-        })*/
-
-        quantity.addEventListener("change", function(){
-            objJson.quantity = quantity.value;
-            location.href = "basket.html";
-            let objLinea2 = JSON.stringify(objJson);
-            localStorage.setItem(objKey, objLinea2);
-        })
+            let lenses = objJson.camera.lenses;
+            for (var j = 0; j < lenses.length; j++) {
+                var selectItem = document.createElement('option');
+                selectItem.textContent = lenses[j];
+                selectItem.value = lenses[j];
+                selectLense.appendChild(selectItem);
+            };
 
 
 
-        buttonDelete.addEventListener("click", function(){
-            localStorage.removeItem(objKey);
-        });
 
-        basketSection.appendChild(myFigure);
-        myFigure.appendChild(myImg);
-        myFigure.appendChild(myFigcaption);
-        myFigcaption.appendChild(productName);
-        myFigcaption.appendChild(selectLense);
-        myFigcaption.appendChild(quantity);
-        myFigcaption.appendChild(price);
-        myFigcaption.appendChild(formDelete);
-        formDelete.appendChild(buttonDelete);
-        buttonDelete.appendChild(iconDelete);
+            /*selectLense.addEventListener("change", function(){
+                choice = selectLense.selectedIndex;
+                objJson.lense = selectLense.options[choice].value;
+                location.href = "basket.html";
+                let objLinea2 = JSON.stringify(objJson);
+                localStorage.setItem(objKey, objLinea2);
+            })*/
+
+            quantity.addEventListener("change", function(){
+                objJson.quantity = quantity.value;
+                location.href = "basket.html";
+                let objLinea2 = JSON.stringify(objJson);
+                localStorage.setItem(objKey, objLinea2);
+            })
+
+
+
+            buttonDelete.addEventListener("click", function(){
+                localStorage.removeItem(objKey);
+            });
+
+            basketSection.appendChild(myFigure);
+            myFigure.appendChild(myImg);
+            myFigure.appendChild(myFigcaption);
+            myFigcaption.appendChild(productName);
+            myFigcaption.appendChild(selectLense);
+            myFigcaption.appendChild(quantity);
+            myFigcaption.appendChild(price);
+            myFigcaption.appendChild(formDelete);
+            formDelete.appendChild(buttonDelete);
+            buttonDelete.appendChild(iconDelete);
+        }
+        const total = document.createElement('p');
+        total.textContent = "Prix total : " + totalPrice / 100 + " €";
+        basketSection.appendChild(total);
     }
-    const total = document.createElement('p');
-    total.textContent = "Total : " + totalPrice / 100 + " €";
-    basketSection.appendChild(total);
     localStorage["requestURL"] = requestURL;
     localStorage["productSelect"] = productSelect;
 }
@@ -101,6 +109,7 @@ async function showBasket() {
 async function order(){
     const orderForm = document.querySelector('form');
     orderForm.addEventListener('submit', function(e) {
+        localStorage["priceOrder"] = totalPrice;
         let myHeader = new Headers({'Content-Type': 'application/json'});
         e.preventDefault();
         const targ = e.target;
@@ -112,9 +121,7 @@ async function order(){
             body : postJSON,
         })
         .then(response => response.json())
-        .then(function(json){
-            localStorage.setItem("order", JSON.stringify(json))
-        })
+        .then(json => localStorage.setItem("order", JSON.stringify(json)))
         .then(function(){location.href = "lastPage.html"})
         .catch(error => alert("Erreur POST : " + error))
     })
