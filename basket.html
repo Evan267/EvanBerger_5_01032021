@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<script src="https://kit.fontawesome.com/199083e587.js" crossorigin="anonymous"></script>
-        <script src="basket.js"></script>
+        <script src="basket.js" defer></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
         <link rel="stylesheet" href="style.css"/>
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -22,31 +22,63 @@
                 </div>
             </nav>
 		</header>
-		<section id="basket">
+		<section id="basket" class="container table-responsive">
+            <table id="basket-table" class="table table-condensed my-4">
+                <tr>
+                    <th class="hidden-xs">Image</th>
+                    <th>Produit</th>
+                    <th>Lentille</th>
+                    <th>Quantité</th>
+                    <th>Prix</th>
+                    <th></th>
+                </tr>
+            </table>
+            <p id="total" class="text-right"></p>
         </section>
-        <section>
-            <form name="orderForm">
-                <div>
-                    <label for="firstName">Prénom</label>
-                    <input class="text-capitalize" type="text" name="firstName" id="firstName" required aria-required="true" pattern="[A-Z][a-z]{1,}">
+        <section class="container" id="form">
+            <form class="form-horizontal" name="orderForm">
+                <h1 class="h3 my-5">Pour confirmer la commande, compléter le formulaire.</h1>
+                <div class="form-group row my-4">
+                    <label class="control-label col-sm-2 text-sm-right align-self-center" for="firstName">Prénom</label>
+                    <div class="col-sm-10">
+                        <input class="text-capitalize form-control" placeholder="Prénom" type="text" name="firstName" id="firstName" required aria-required="true" pattern="[A-Z,a-z,-]{1,}">
+                        <span class="text-danger"></span>
+                    </div>
                 </div>
-                <div>
-                    <label for="lastName">Nom</label>
-                    <input class="text-capitalize" type="text" name="lastName" id="lastName" required aria-required="true" pattern="[A-Z,a-z]{1,}">
+                <div class="row my-3">
+                    <label class="col-sm-2 text-sm-right align-self-center" for="lastName">Nom</label>
+                    <div class="col-sm-10">
+                        <input class="text-capitalize form-control" placeholder="Nom" type="text" name="lastName" id="lastName" required aria-required="true" pattern="[A-Z,a-z]{1,}">
+                        <span id="missPrenom" class="text-danger"></span>
+                    </div>
                 </div>
-                <div>
-                    <label for="address">Adresse</label>
-                    <input type="text" name="address" id="address" required aria-required="true" pattern="[0-9]{1,}[a-z, ,,,A-Z,0-9]{1,}">
+                <div class="row my-3">
+                    <label class="col-sm-2 text-sm-right align-self-center" for="address">Adresse</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" placeholder="Adresse" type="text" name="address" id="address" required aria-required="true" pattern="[0-9]{1,}[a-z, ,,,A-Z,0-9]{1,}">
+                        <span class="text-danger"></span>
+                    </div>
                 </div>
-                <div>
-                    <label for="city">Ville</label>
-                    <input class="text-capitalize" type="text" name="city" id="city" required aria-required="true" pattern="[A-Z,a-z,-]{2,}">
+                <div class="row my-3">
+                    <label class="col-sm-2 text-sm-right align-self-center" for="city">Ville</label>
+                    <div class="col-sm-10">
+                        <input class="text-capitalize form-control" placeholder="Ville" type="text" name="city" id="city" required aria-required="true" pattern="[A-Z,a-z,-]{2,}">
+                        <span class="text-danger"></span>
+                    </div>
                 </div>
-                <div>
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" required aria-required="true">
+                <div class="row my-3">
+                    <label class="col-sm-2 text-sm-right align-self-center" for="email">Email</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" placeholder="Adresse e-mail" type="email" name="email" id="email" required aria-required="true">
+                        <span class="text-danger"></span>
+                    </div>
                 </div>
-                <input type="submit" value="Commander">
+                <div class="row my-3">
+                    <div class="col-sm-2">
+                    </div>
+                    <input type="submit" value="Commander" class="btn btn-dark col-sm-3 m-3" onclick="order()">
+                    <span id="submitError" class="text-danger mt-sm-4 col-12 col-sm-5 text-center"></span>
+                </div>
             </form>
         </section>
 		<footer></footer>

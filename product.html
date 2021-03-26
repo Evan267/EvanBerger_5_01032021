@@ -22,18 +22,22 @@
                 </div>
             </nav>
 		</header>
-		<section class="container py-4">
+		<section class="container py-4 border-primary">
 			<figure class="row">
 				<img src="" class="col-lg-9">
 				<figcaption class="col-lg-3">
 					<h1></h1>
 					<p id="p1"></p>
-					<p id="p2"></p>
-					<label for="lense">Dimension lentilles : </label>
-					<select name="lense" id="lense"></select>
-					<label for="quantity">Quantité : </label>
-					<input type="number" name="quantity" id="quantity" value="1" min="1">
-					<button type="submit" class="btn btn-dark btn-lg btn-block">Ajouter au panier</button>
+					<p id="p2" class="my-4"></p>
+					<div class="row my-3">
+						<label class="col-lg" for="lense">Lentilles : </label>
+						<select class="form-control col-lg-7" name="lense" id="lense"></select>
+					</div>
+					<div class="row my-3">
+						<label class="col-lg" for="quantity">Quantité : </label>
+						<input class="form-control col-lg-7" type="number" name="quantity" id="quantity" value="1" min="1">
+					</div>
+					<button type="submit" class="btn btn-dark btn-lg btn-block mt-5">Ajouter au panier</button>
 				</figcaption>
 			</figure>
 		</section>

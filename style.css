@@ -2,10 +2,16 @@ a, a:hover{
     color: black;
     text-decoration: none;
 }
- figure img{
-     height: 70%;
-     object-fit: cover;
- }
- figcaption a:hover{
-     background-color: grey;
- }
+figure img{
+    height: 70%;
+    object-fit: cover;
+}
+figcaption a:hover{
+    background-color: grey;
+}
+
+td img{
+    width: 15vw;
+}
+
+

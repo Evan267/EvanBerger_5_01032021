@@ -1,9 +1,7 @@
-console.log(localStorage)
 localStorage["requestURL"] = "http://localhost:3000/api/cameras";
 let requestURL = localStorage["requestURL"];
 let productRequestURL;
 localStorage.removeItem("order");
-
 
 function showCamera(jsonObj) {
     let camera = jsonObj;
@@ -44,7 +42,6 @@ function showCamera(jsonObj) {
             
     }
 }
-
 
 fetch(requestURL)
     .then(function(response){
