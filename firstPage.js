@@ -3,7 +3,7 @@ let requestURL = localStorage["requestURL"];
 let productRequestURL;
 localStorage.removeItem("order");
 
-function showCamera(jsonObj) {
+function showCameras(jsonObj) {
     let camera = jsonObj;
     const section = document.getElementById("section");
 
@@ -39,7 +39,7 @@ function showCamera(jsonObj) {
             myLink.appendChild(myFigcaption);
             myFigcaption.appendChild(myH3);        
             myFigcaption.appendChild(myPara);
-            
+            console.log(i + 1);
     }
 }
 
@@ -48,7 +48,7 @@ fetch(requestURL)
         return response.json();
     })
     .then(function(response){
-        return showCamera(response);
+        return showCameras(response);
     })
     .catch(function(error){
         return alert("Erreur : " + error)

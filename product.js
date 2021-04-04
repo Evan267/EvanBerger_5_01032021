@@ -50,6 +50,7 @@ fetch(requestURL)
         return response.json();
     })
     .then(function(response){
+        console.log(response)
         return showCamera(response);
     })
     .catch(function(error){
